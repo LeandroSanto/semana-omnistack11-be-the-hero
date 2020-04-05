@@ -5,43 +5,45 @@ import {FiArrowLeft} from 'react-icons/fi';
 import api from '../../services/api';
 
 import './styles.css';
-import logoimage from '../../assets/logo.svg';
+import logoImage from '../../assets/logo.svg';
 
 export default function Incidents(){
     const history = useHistory();
 
-    const[title,setTitle]= useState('');
-    const[description,setDescription]= useState('');
-    const[value,setValue]= useState('');
+    const [ title, setTitle ] = useState('');
+    const [ description, setDescription ] = useState('');
+    const [ value, setValue ] = useState('');
 
     const data = {
         title,
         description,
         value,
-    }
-    
+    };
+
     const ongId = localStorage.getItem('ongId');
     
     async function handleNewIncident(e){
         e.preventDefault();
 
         try{
-            await api.post('incidents',data,{
+            await api.post('incidents', data, {
                 headers:{
-                    Autorization:ongId,
+                    Authorization: ongId,
                 }
             });
-            history.push('/profile');
+
+            history.push('/profiles');
+
         } catch (err){
-            alert('Não foi possivel registrar o novo Incidente')
-        }
-    }
+            alert('Não foi possivel registrar o novo Incidente');
+        };
+    };
 
     return(
         <div className="incidents-container">
             <div className="content">
                 <section>
-                    <img src={logoimage} alt="Be The Hero" />
+                    <img src={logoImage} alt="Be The Hero" />
                     <h1>Cadastrar novo Caso</h1>
                     <p>Faça seu cadastro, entre na plataforma e ajude pessoas a encontrarem os casos da sua ONG.</p>
                     
@@ -67,7 +69,7 @@ export default function Incidents(){
                     value={value}
                     onChange={e => setValue(e.target.value)}
                     />                                      
-                    <button className="button" type="submit">Cadastrar</button>
+                    <button onClick={handleNewIncident} className="button" type="submit">Cadastrar</button>
                 </form>
             </div>
         </div>

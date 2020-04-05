@@ -23,21 +23,23 @@ module.exports = {
 
         return response.json(incidents);
     },
-    async store (request,response){
-        const {title, description,value} = request.body;
+    async store ( request, response ){
+        const { title, description, value } = request.body;
         const ong_id = request.headers.authorization;
 
-        const [id] = await connection('incidents').insert({
+        const [ id ] = await connection('incidents').insert({
             title,
             description,
             value,
             ong_id,
         });
 
-        return response.json({ id });
+        return response.json({ 
+            id,
+        });
     },
     async delete (request,response){
-        const {id} = request.params;
+        const { id } = request.params;
         const ong_id = request.headers.authorization;
 
         const incident = await connection('incidents')

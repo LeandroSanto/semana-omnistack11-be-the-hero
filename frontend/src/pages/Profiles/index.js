@@ -1,24 +1,26 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import {FiPower, FiTrash2} from 'react-icons/fi';
 
 import api from '../../services/api';
 
 import './styles.css';
+
 import logoimage from '../../assets/logo.svg';
 
 export default function Profiles(){
     const history = useHistory();
 
-    const [incidents, setIncidents]=useState([]);
+    const [incidents, setIncidents] = useState([]);
 
     const ongName = localStorage.getItem('ongName');
     const ongId = localStorage.getItem('ongId');
+    
 
     useEffect(()=>{
         api.get('profile',{
-            headers:{
-                Autorization:ongId,
+            headers: {
+                Authorization: ongId,
             }
         }).then(response =>{
             setIncidents(response.data);
@@ -29,14 +31,17 @@ export default function Profiles(){
         try{
             await api.delete(`incidents/${id}`,{
                 headers:{
-                    Autorization:ongId,
+                    Authorization: ongId,
                 }
             });
-            setIncidents(incidents.filter(incident => incident.id !== id));
+            console.log(incidents.ong_id, incidents.id);
+
+            setIncidents(incidents.filter(incidents => incidents.id !== id));
         } catch (err){
             alert('Erro ao deletar caso, tente novamente.');
         }
-    }
+    };
+
     function handleLogout(){
         localStorage.clear();
         history.push('/');
@@ -48,6 +53,7 @@ export default function Profiles(){
                 <span>Bem Vindo(a) {ongName}</span>
                 
                 <Link className="button" to="incidents/new">Cadastrar novo caso</Link>
+
                 <button onClick={handleLogout}type="button">
                     <FiPower size={18}  color="#e02041"/>
                 </button>
@@ -56,8 +62,8 @@ export default function Profiles(){
  
             <ul>
                 {incidents.map(incidents =>(
-                 <li key={incidents.div}>
-                    <strong>CASO:</strong>
+                 <li key={incidents.id}>
+                    <strong>CASO: {incidents.id}</strong>
                     <p>{incidents.title}</p>
                     
                     <strong>DESCRIÇÂO:</strong>
@@ -66,8 +72,8 @@ export default function Profiles(){
                     <strong>VALOR:</strong>
                     <p>{Intl.NumberFormat('pt-BR', { style:'currency', currency:'BRL'}).format(incidents.value)}</p>
 
-                    <button onCick={()=> handleDeleteIncident(incidents.id)} type="button">
-                    <FiTrash2 size={20} color="#a8a8b3"/>
+                    <button onClick={()=> handleDeleteIncident(incidents.id)} type="button">
+                        <FiTrash2 size={20} color="#a8a8b3"/>
                     </button>
                  </li>
                 ))}
