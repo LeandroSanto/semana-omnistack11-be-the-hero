@@ -21,22 +21,21 @@ export default function Incidents(){
     };
 
     const ongId = localStorage.getItem('ongId');
-    
+
+
     async function handleNewIncident(e){
         e.preventDefault();
 
         try{
-            await api.post('incidents', data, {
+            await api.post('incidents',data,{
                 headers:{
-                    Authorization: ongId,
+                    Authorization:ongId,
                 }
             });
-
             history.push('/profiles');
-
         } catch (err){
-            alert('Não foi possivel registrar o novo Incidente');
-        };
+            alert('Não foi possivel registrar o novo Incidente')
+        }
     };
 
     return(
