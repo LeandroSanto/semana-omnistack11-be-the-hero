@@ -22,6 +22,11 @@ export default StyleSheet.create({
         marginBottom: 16,
         marginTop: 48
     },
+
+    incidentLocation:{
+        color: '#737380',
+        fontSize: 12
+    },
     
     incidentProperty: {
         fontSize: 14,
