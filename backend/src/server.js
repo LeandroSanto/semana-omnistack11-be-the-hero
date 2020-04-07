@@ -1,16 +1,3 @@
-const express = require ('express');
-const routes = require ('./routes');
-const cors = require ('cors');
-const { errors } = require ('celebrate');
+const app = require('./app');
 
-const server = express();
-
-server.use(cors());
-server.use(express.json());
-
-server.use(routes);
-
-server.use(error());
-
-/* Porta para ser "ouvida" pelo express */
-server.listen(3333);
+app.listen(3333);

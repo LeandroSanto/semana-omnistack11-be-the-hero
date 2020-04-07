@@ -1,5 +1,5 @@
 const {Router} = require ('express');
-const { Celebrate, Segments, Joi } = require ('celebrate');
+const { celebrate, Segments, Joi } = require ('celebrate');
 
 const OngController = require ('./controllers/OngsControllers');
 const IncidentController = require ('./controllers/IncidentControllers');
@@ -13,7 +13,7 @@ routes.post('/ongs', celebrate({
     [Segments.BODY]: Joi.object().keys({
         name: Joi.string().required(),
         email: Joi.string().required().email(),
-        whatsapp: Joi.number().required().min(10).max(11),
+        whatsapp: Joi.string().required().min(10).max(11),
         city: Joi.string().required(),
         uf: Joi.string().required().length(2),
     })
@@ -32,7 +32,7 @@ routes.get('/incidents', celebrate({
     })
 }),IncidentController.index);
 routes.post('/incidents', celebrate({
-    [Segements.HEADERS]: Joi.object({
+    [Segments.HEADERS]: Joi.object({
         authorization: Joi.number().required()
     }).unknown(),
     [Segments.BODY]: Joi.object().keys({
